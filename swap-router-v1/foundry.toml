@@ -8,3 +8,25 @@ optimizer_runs = 10000
 evm_version = "cancun"
 FORGE_SNAPSHOT_CHECK = true
 gas_reports = ["RouterV2", "Router"]
+
+
+
+# Global fork configuration
+fork_url = "https://eth-mainnet.nodereal.io/v1/3238e8124a5e4215ad14c1953c2c1c2c"
+fork_block_number = 22821947
+
+# Higher gas and timeout limits
+gas_limit = 100000000
+timeout = 600
+
+# RPC endpoints 
+[rpc_endpoints]
+mainnet = "https://eth-mainnet.nodereal.io/v1/3238e8124a5e4215ad14c1953c2c1c2c"
+
+# Test configuration
+[profile.default.fuzz]
+runs = 256
+
+[profile.ci]
+fuzz = { runs = 10 }
+verbosity = 4
