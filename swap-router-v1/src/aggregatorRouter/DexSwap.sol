@@ -141,6 +141,7 @@ contract DexSwap is ReentrancyGuard, Admin {
         // 4. execute swap
         {
             uint256 balanceBefore = IERC20(params.toToken).universalBalanceOf(address(this));
+            //@>i core call to swap = call spender which in turn will call adapter
             spender.swap{value: params.fromToken == UniversalERC20.ETH ? params.fromTokenAmount : 0}(
                 adapter.addr,
                 abi.encodeWithSelector(
@@ -154,6 +155,7 @@ contract DexSwap is ReentrancyGuard, Admin {
         if (receivedAmount < params.minAmountOut) revert RouterError.SlippageLimitExceeded();
 
         // 6. charge fee on toToken if needed
+        //@>i we deduce fee from fromToken or toToken
         if (!params.feeOnFromToken) {
             (receivedAmount, feeAmount) =
                 _chargeFee(params.toToken, params.feeOnFromToken, receivedAmount, params.feeRate, params.feeReceiver);

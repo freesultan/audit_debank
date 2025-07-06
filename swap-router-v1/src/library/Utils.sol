@@ -27,7 +27,7 @@ library Utils {
     // @dev SimpleSwap Represents a swap from A->B through a specific dex, without involving intermediate paths.
     struct SimpleSwap {
         uint256 percent;
-        uint256 swapType;
+        uint256 swapType;//@>q what types of swaps we have?
         bytes data;
     }
 

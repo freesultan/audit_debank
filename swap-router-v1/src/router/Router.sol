@@ -79,7 +79,7 @@ contract Router is Admin, ReentrancyGuard {
 
         uint256 balanceBefore = IERC20(toToken).universalBalanceOf(address(this));
 
-        //execute swap，transfer token to executor
+        //execute swap，transfer token to executor 
         executor.executeMegaSwap{value: fromToken == UniversalERC20.ETH ? fromTokenAmount : 0}(
             IERC20(fromToken), IERC20(toToken), paths
         );
@@ -111,6 +111,7 @@ contract Router is Admin, ReentrancyGuard {
                 IERC20(token).universalTransfer(payable(feeReceiver), feeAmount);
             }
         }
+        //@>q what's the diff between amount - feeAmount and  amount -= feeAmount? no diff in effect 
         return (amount -= feeAmount, feeAmount);
     }
 

@@ -22,6 +22,7 @@ library UniversalERC20 {
         }
     }
 
+    //@>q this is assumed to work fine for eth, is it right/
     function universalTransferFrom(IERC20 token, address from, address payable to, uint256 amount) internal {
         if (amount > 0) {
             if (isETH(token)) {
