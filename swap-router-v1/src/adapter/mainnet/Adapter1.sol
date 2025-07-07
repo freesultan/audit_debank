@@ -49,6 +49,7 @@ contract Adapter1 is
      * @param fromTokenAmount The amount of the token to swap from
      * @param swaps The array of swaps to execute
      */
+    //@>i this adapter works as a dispatcher for different kinds of dexes 
     function executeSimpleSwap(
         address fromToken,
         address toToken,
