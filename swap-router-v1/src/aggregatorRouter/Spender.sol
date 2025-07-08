@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Spender {
     using UniversalERC20 for IERC20;
-
+    //@>i this is the only state of this contract to keep the state simple. This is the one who delegate calls to adapters
     address public immutable dexSwap;
 
     constructor() {
@@ -20,6 +20,9 @@ contract Spender {
 
     /// @notice Receive ETH
     receive() external payable {}
+
+
+    //@>i spender is a contract that allows the DexSwap to call adapters
 
     function swap(address adapter, bytes calldata data) external payable {
         if (msg.sender != dexSwap) revert RouterError.Forbidden();
@@ -36,6 +39,7 @@ contract Spender {
     function _delegate(address target, bytes memory data, string memory errorMessage) private returns (bytes memory) {
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, bytes memory returndata) = target.delegatecall(data);
+        
         if (success) {
             return returndata;
         } else {

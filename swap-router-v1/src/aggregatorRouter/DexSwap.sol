@@ -39,7 +39,7 @@ contract DexSwap is ReentrancyGuard, Admin {
         bool isRegistered;
         bytes4 selector;
     }
-
+    //@>i a trusted frontend generate this parameters object
     struct SwapParams {
         string aggregatorId;
         address fromToken;
@@ -48,7 +48,7 @@ contract DexSwap is ReentrancyGuard, Admin {
         uint256 minAmountOut;
         uint256 feeRate;
         bool feeOnFromToken;
-        address feeReceiver;
+        address feeReceiver; 
         bytes data;
     }
 
@@ -71,6 +71,7 @@ contract DexSwap is ReentrancyGuard, Admin {
 
     constructor(address[3] memory _admins, uint256 _maxFeeRate) Admin(_admins) {
         maxFeeRate = _maxFeeRate;
+        //@>i here dexSwap deploys spender contract which is used to delegate calls to adapters
         spender = new Spender();
     }
 
@@ -141,7 +142,7 @@ contract DexSwap is ReentrancyGuard, Admin {
         // 4. execute swap
         {
             uint256 balanceBefore = IERC20(params.toToken).universalBalanceOf(address(this));
-            //@>i core call to swap = call spender which in turn will call adapter
+            //@>i core call to swap = call spender which in turn will call one of the adapters
             spender.swap{value: params.fromToken == UniversalERC20.ETH ? params.fromTokenAmount : 0}(
                 adapter.addr,
                 abi.encodeWithSelector(
